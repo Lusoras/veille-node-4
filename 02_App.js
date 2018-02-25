@@ -4,7 +4,7 @@ app.use(express.static('public'));
 const fs = require("fs");
 
 
-
+///Créee tableau
 const transform_en_tableau = (tableau) => {
     let nomVar = '<head><meta charset="UTF-8"><link rel="stylesheet" type="text/css" href="/css/style.css"></head><table><tr><th>Prénom</th><th>Nom de famille</th><th>Téléphone</th><th>Courriel</th><th>Id</th></tr>';
     for (elm of tableau) {
@@ -18,6 +18,7 @@ const transform_en_tableau = (tableau) => {
     return nomVar;
 }
 
+///Prend formulaire
 app.get('/formulaire', (req, res) => {
     console.log(__dirname);
     res.sendFile(__dirname + "/public/html/" + "01_Formulaire.htm");
@@ -43,14 +44,14 @@ app.get('/traiter_get', (req, res)=>  {
     };
     console.log(reponse);
     res.end(JSON.stringify(reponse));
-
+//rajoute les infromations dans le fichier
     fs.appendFile(__dirname + "/public/data/" + "membres.txt", "," + JSON.stringify(reponse), (err)=>  {
         if (err) throw err;
         console.log('Sauvegardé');
     });
 })
 
-
+//affiche le fichier en tableau
 app.get("/membres", (req, res) => {
     fs.readFile(__dirname + "/public/data/" + 'membres.txt', 'utf8', (err, data)=> {
         if (err) throw err;
